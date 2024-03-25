@@ -1,0 +1,110 @@
+@font-face {
+    font-family: "Espace Mono";
+    src: url('chemin/vers/le/fichier/EspaceMono-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Espace Mono";
+    src: url('chemin/vers/le/fichier/EspaceMono-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Espace Mono";
+    src: url('chemin/vers/le/fichier/EspaceMono-RegularItalic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: "Espace Mono";
+    src: url('chemin/vers/le/fichier/EspaceMono-BoldItalic.ttf') format('truetype');
+    font-weight: 700;
+    font-style: italic;
+}
+
+a {
+    font-family: "Espace Mono", monospace;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23.7px;
+}
+
+/* HEADER */
+
+.site-title {
+    display: none;
+}
+
+.site-header {
+    box-shadow: 0px 4px 14px 10px #00000008 !important;
+}
+
+.ast-logo-title-inline .site-logo-img {
+    max-width: 216px;
+    width: 100%;
+}
+
+.menu-link a:hover {
+    font-weight: 700 !important;
+}
+
+@media screen and (max-width: 921px) {
+    .ast-builder-menu-mobile .main-navigation .main-header-menu, .ast-builder-menu-mobile .main-navigation .main-header-menu .sub-menu {
+        text-align: center;
+        padding: 150px 0;
+    }
+    .main-navigation a {
+        font-size: 44px;
+        line-height: 65.6px;
+    }
+    .ast-header-break-point #masthead .ast-mobile-header-wrap .ast-primary-header-bar, .ast-header-break-point #masthead .ast-mobile-header-wrap .ast-below-header-bar, .ast-header-break-point #masthead .ast-mobile-header-wrap .ast-above-header-bar {
+        padding: 0 30px;
+    }
+    .ast-logo-title-inline .site-logo-img {
+        padding-left: 1em !important;
+    }
+}
+
+/* FOOTER */
+
+.menu-pied-de-page-container ul {
+    min-height: 40px;
+}
+
+#site-footer li {
+    padding: 0 32px;
+    list-style-type: none;
+    text-align: center;
+}
+
+#site-footer a {
+    color: #000000;
+}
+
+/* #site-footer a:hover {
+    font-weight: 600;
+} */
+
+#menu-pied-de-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    border-top: 1px solid #000000;
+}
+
+@media screen and (max-width: 768px) {
+    #menu-pied-de-page {
+        flex-direction: column;
+        padding: 32px 0
+    }
+
+    #site-footer li {
+        padding: 8px;
+    }
+}
