@@ -65,6 +65,7 @@ a:focus {
 }
 
 /* MODAL CONTACT */
+
 .overlay {
     position: fixed;
     top: 0;
@@ -81,13 +82,10 @@ a:focus {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50%;
-    max-width: 597px; /* Limitez la largeur maximale de la modale */
-    height: auto; /* Permettez à la hauteur de la modale de s'ajuster automatiquement au contenu */
+    width: 597px;
     background-color: white;
     border: solid 5px #000000;
-    max-height: calc(100% - 50px); /* Ajustez la hauteur maximale pour éviter un débordement */
-    /* box-sizing: border-box;  */
+    /* max-height: calc(100% - 50px); /*Ajustez la hauteur maximale pour éviter un débordement */
     z-index: 1000;
     display: none;
 }
@@ -143,12 +141,12 @@ input[type="submit"]:focus  {
 
 @media screen and (max-width: 768px) {
     .modal {
-        width: 70%; /* Réduction de la largeur de la modale sur les petits écrans */
-        height: auto; /* Permettre à la hauteur de la modale de s'ajuster automatiquement au contenu */
+        width: 70%;
+        height: auto; 
     }
 
     .wpcf7 {
-        margin: 0 20px; /* Réduire les marges intérieures pour les petits écrans */
+        margin: 0 20px; 
     }
 }
 
