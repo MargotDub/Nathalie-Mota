@@ -19,11 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header(); ?>
 
+
 <?php get_template_part('../templates_part/modal') ?>
 <?php if ( astra_page_layout() == 'left-sidebar' ) : ?>
 
 	<?php get_sidebar(); ?>
-	<?php get_template_part('/templates_part/modal', 'contact') ?>
 <?php endif ?>
 	<div id="primary" <?php astra_primary_class(); ?>>
 		<?php
