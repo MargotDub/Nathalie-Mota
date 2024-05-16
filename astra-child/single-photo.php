@@ -112,21 +112,44 @@ if (!empty($photo_categories)) {
                 'terms' => $random_category_id,
             ),
         ),
+        'post__not_in' => array($current_photo_id),
     ));
 
     // Vérifie si des posts ont été trouvés
     if ($random_photos_query->have_posts()) :
 ?>
         <h3 class="single-title-h3">VOUS AIMEREZ AUSSI</h3>
-        <div class="photo-aleatoire">
+        <div class="flexbox-layout">
             <?php
             while ($random_photos_query->have_posts()) : $random_photos_query->the_post();
+                $random_photo_id = get_the_ID();
+                $random_photo_title = get_the_title();
+                $random_photo_reference = get_post_meta($random_photo_id, 'reference', true);
+                $random_photo_categories = get_the_terms($random_photo_id, 'categorie');
+                $random_category_names = array();
+
+                if ($random_photo_categories) {
+                    foreach ($random_photo_categories as $category) {
+                        $random_category_names[] = $category->name;
+                    }
+                }
+                $random_category_list = implode(', ', $random_category_names);
             ?>
-                <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail('full'); ?></a>
+            <div class="photo-item">
+                <?php the_post_thumbnail('full'); ?>
+                <div class="buttons-container">
+                    <button class="fullscreen-button" data-image-url="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" data-reference="<?php echo esc_attr($random_photo_reference); ?>" data-category="<?php echo esc_attr($random_category_list); ?>"></button>
+                    <button class="eye-button" data-image-url="<?php echo esc_url(get_the_post_thumbnail_url()); ?>" data-post-url="<?php the_permalink(); ?>"></button>
+                    <?php
+                        echo '<p class="title_lightbox-hover">' . esc_html($random_photo_title) . '</p>';
+                        echo '<p class="categorie_lightbox-hover">' . esc_html($random_category_list) . '</p>';
+                    ?>
+                </div>
+            </div>
             <?php endwhile; ?>
         </div>
 <?php
-        wp_reset_postdata();
+    wp_reset_postdata();
     endif;
 }
 ?>

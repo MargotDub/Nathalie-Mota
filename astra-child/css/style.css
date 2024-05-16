@@ -313,26 +313,6 @@ h1 {
     object-position: 50% 50%;
 }
 
-.flexbox-layout {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.photo-item {
-    width: calc(50% - 10px);
-    margin-bottom: 10px;
-}
-
-.photo-item img {
-    width: 100%;
-    height: 495px;
-    object-fit: cover;
-    object-position: center;
-    cursor: pointer;
-}
-
 .load-more-button {
     font-family: "Espace Mono", monospace;
     width: 272px;
@@ -349,6 +329,13 @@ h1 {
     background-color: #000000;
     color: #ffffff;
     transition: 500ms;
+}
+
+.button-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 /*Filtres*/
@@ -376,7 +363,7 @@ select option {
 }
 
 #trier-par {
-    margin-left: auto;
+    margin-left: 24rem;
 }
 
 #formats {
@@ -398,14 +385,6 @@ select option {
 
 .filtre-none {
     display: none;
-}
-
-.filtres select option:hover {
-    background-color: #E00000; 
-}
-
-.filtres select option {
-    height: 85px;
 }
 
 /************************************************** MEDIA QUERIES *******************************************************/
@@ -449,13 +428,43 @@ select option {
         margin: 0 20px; 
     }
 
-    .photo-item {
+    /* .photo-item {
         width: calc(100% - 10px);
-    }
+    } */
     .previous-post-link,
     .fleches-previous-next
      {
         display: none;
+    }
+}
+
+@media screen and (max-width: 1234px) {
+    #trier-par {
+        margin-left: 30px;
+    }
+}
+
+@media screen and (max-width: 880px) {
+    .filtres {
+        justify-content: center;
+        margin-top: 35px
+    }
+}
+
+@media screen and (max-width: 591px) {
+    #formats {
+        margin-left: 0;
+    }
+    p {
+        margin-bottom: 1em;
+    }
+    #formats,
+    #trier-par,
+    #categories {
+        width: 270px;
+    }
+    #trier-par {
+        margin-left: 0;
     }
 }
 
@@ -476,6 +485,9 @@ select option {
 @media screen and (max-width: 1023px) {
     #single-photo-details h2 {
         margin-top: 20px;
+    }
+    #single-photo-details h2 {
+        width: 100%;
     }
 }
 

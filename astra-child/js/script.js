@@ -1,37 +1,3 @@
-//REQUETE AJAX CHARGER //
-jQuery(function($) {
-    let page = -1;
-    let loading = false;
-    let $loadmoreButton = $('.load-more-button');
-    
-    $loadmoreButton.on('click', function(){
-        console.log("Bouton 'charger plus' cliqué!");
-        if( ! loading ) {
-            loading = true;
-            let data = {
-                'action': 'load_more_photos',
-                'page': page,
-            };
-
-            $.ajax({
-                url: ajax_params.ajaxurl,
-                type: 'POST',
-                data: data,
-                success: function(response){
-                    console.log(response)
-                    if(response) {
-                        $('.photo-container').append(response);
-                        page++;
-                    } else {
-                        $loadmoreButton.remove();
-                    }
-                    loading = false;
-                }
-            });
-        }
-    });
-});
-
 // OUVERTURE MODALE AVEC LE LIEN ET LE BOUTON //
 document.addEventListener("DOMContentLoaded", function() {
     let myModal = document.querySelector('.modal');
@@ -70,27 +36,207 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // SINGLE PAGE VIGNETTE AU SURVOL DES FLECHES //
 document.addEventListener("DOMContentLoaded", function() {
+
     const previousLink = document.querySelector(".previous-post-link a");
     const nextLink = document.querySelector(".next-post-link a");
     const previousPhoto = document.querySelector(".previous-photo");
     const nextPhoto = document.querySelector(".next-photo");
 
-    previousLink.addEventListener("mouseover", function() {
-        previousPhoto.classList.add("visible");
-        nextPhoto.classList.remove("visible");
-    });
-
-    nextLink.addEventListener("mouseover", function() {
-        nextPhoto.classList.add("visible");
-        previousPhoto.classList.remove("visible");
-    });
+    if (previousLink) {
+        previousLink.addEventListener("mouseover", function() {
+            previousPhoto.classList.add("visible");
+            nextPhoto.classList.remove("visible");
+        });
 
     // Ajouter des écouteurs d'événements pour gérer le mouseout
-    previousLink.addEventListener("mouseout", function() {
+        previousLink.addEventListener("mouseout", function() {
         previousPhoto.classList.remove("visible");
     });
+}
 
-    nextLink.addEventListener("mouseout", function() {
-        nextPhoto.classList.remove("visible");
-    });
+    if (nextLink) {
+        nextLink.addEventListener("mouseover", function() {
+            nextPhoto.classList.add("visible");
+            previousPhoto.classList.remove("visible");
+        });
+
+        nextLink.addEventListener("mouseout", function() {
+            nextPhoto.classList.remove("visible");
+        });
+    }
 });
+
+// LIGHTBOX //
+class Lightbox {
+    constructor(images, currentIndex) {
+        this.images = images;
+        this.currentIndex = currentIndex;
+        this.element = this.buildDOM();
+        this.loadImage(this.images[this.currentIndex]);
+        document.body.appendChild(this.element);
+
+        const closeButton = this.element.querySelector('.lightbox__close');
+        closeButton.addEventListener('click', () => this.close());
+
+        const nextButton = this.element.querySelector('.lightbox__next');
+        nextButton.addEventListener('click', () => this.next());
+
+        const prevButton = this.element.querySelector('.lightbox__prev');
+        prevButton.addEventListener('click', () => this.prev());
+    }
+
+    loadImage(imageData) {
+        const { url, reference, category } = imageData;
+        const image = new Image();
+        const container = this.element.querySelector('.lightbox__container');
+        container.innerHTML = ''; // Clear previous content
+        const loader = document.createElement('div');
+        loader.classList.add('lightbox__loader');
+        container.appendChild(loader);
+        image.onload = function () {
+            container.removeChild(loader);
+            container.appendChild(image);
+        };
+        image.src = url;
+
+        // Update reference and category info
+        this.element.querySelector('.reference_lightbox-info').textContent = reference;
+        this.element.querySelector('.categorie_lightbox-info').textContent = category;
+    }
+
+    buildDOM() {
+        const dom = document.createElement('div');
+        dom.classList.add('lightbox');
+        dom.innerHTML = `
+            <button class="lightbox__close">Fermer</button>
+            <button class="lightbox__next">Suivant</button>
+            <button class="lightbox__prev">Précédent</button>
+            <div class="lightbox__container"></div>
+            <div class="lightbox__info">
+                <p class="reference_lightbox-info"></p>
+                <p class="categorie_lightbox-info"></p>
+            </div>`;
+        return dom;
+    }
+
+    next() {
+        this.currentIndex = (this.currentIndex + 1) % this.images.length;
+        this.loadImage(this.images[this.currentIndex]);
+    }
+
+    prev() {
+        this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+        this.loadImage(this.images[this.currentIndex]);
+    }
+
+    close() {
+        document.body.removeChild(this.element);
+    }
+
+    static init() {
+        const photoContainer = document.querySelector('.flexbox-layout');
+        if (photoContainer) {
+            photoContainer.addEventListener('click', (event) => {
+                if (event.target.classList.contains('fullscreen-button')) {
+                    const images = Array.from(document.querySelectorAll('.fullscreen-button')).map(btn => ({
+                        url: btn.getAttribute('data-image-url'),
+                        reference: btn.getAttribute('data-reference'),
+                        category: btn.getAttribute('data-category')
+                    }));
+                    const currentIndex = images.findIndex(image => image.url === event.target.getAttribute('data-image-url'));
+                    new Lightbox(images, currentIndex);
+                }
+            });
+        }
+    }
+}
+
+Lightbox.init();
+
+function initializeEyeButtons() {
+    const eyeButtons = document.querySelectorAll('.eye-button');
+
+    eyeButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            // Récupérer l'URL du post associé à ce bouton
+            const postUrl = button.getAttribute('data-post-url');
+            // Rediriger l'utilisateur vers l'URL du post
+            window.location.href = postUrl;
+        });
+    });
+}
+
+// Fonction pour charger plus de photos
+jQuery(document).ready(function($) {
+    let page = 2;
+    let loading = false;
+    
+    $('.load-more-button').on('click', function() {
+        if (!loading) {
+            loading = true;
+            let categories = $('#categories').val();
+            let formats = $('#formats').val();
+            let trierPar = $('#trier-par').val();
+
+            $.ajax({
+                url: my_ajax_vars.ajaxurl,
+                type: 'post',
+                data: {
+                    action: 'load_more_photos',
+                    page: page,
+                    categories: categories,
+                    formats: formats,
+                    trierPar: trierPar
+                },
+                success: function(response) {
+                    if (response !== 'fin') {
+                        $('.flexbox-layout').append(response);
+                        page++;
+                        initializeEyeButtons();
+                    } else {
+                        $('.load-more-button').hide();
+                    }
+                    loading = false;
+                }
+            });
+        }
+    });
+
+    initializeEyeButtons();
+});
+
+//REQUETE AJAX CHARGER //
+// jQuery(document).ready(function($) {
+//     let page = 2;
+//     let loading = false;
+    
+//     $('.load-more-button').on('click', function() {
+//         if (!loading) {
+//             loading = true;
+//             let categories = $('#categories').val();
+//             let formats = $('#formats').val();
+//             let trierPar = $('#trier-par').val();
+
+//             $.ajax({
+//                 url: my_ajax_vars.ajaxurl,
+//                 type: 'post',
+//                 data: {
+//                     action: 'load_more_photos',
+//                     page: page,
+//                     categories: categories,
+//                     formats: formats,
+//                     trierPar: trierPar
+//                 },
+//                 success: function(response) {
+//                     if (response !== 'fin') {
+//                         $('.flexbox-layout').append(response);
+//                         page++;
+//                     } else {
+//                         $('.load-more-button').hide();
+//                     }
+//                     loading = false;
+//                 }
+//             });
+//         }
+//     });
+// });

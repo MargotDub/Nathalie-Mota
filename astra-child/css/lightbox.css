@@ -1,0 +1,206 @@
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    z-index: 1001;
+    overflow: auto;
+    animation: lightBoxIn .5s;
+}
+
+.lightbox__next,
+.lightbox__prev {
+    background: url('../svg/arrow.svg') center center / 36px 16px no-repeat;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    height: 100%;
+    position: fixed;
+    right: 0;
+    top: 0;
+    /* margin-top: -14px; */
+    margin: -14px 14px 0 0;
+    z-index: 1002;
+    text-indent: -30000px;
+}
+
+.lightbox__prev {
+    right: auto;
+    left: 0;
+    transform: rotate(180deg);
+}
+
+.lightbox__close {
+    width: 15px;
+    height: 15px;
+    border: none;
+    background: url('../svg/cross.svg') center center / 25px 25px no-repeat transparent;
+    z-index: 1002;
+    position: fixed;
+    text-indent: -30000px;
+    top: 40px;
+    right: 40px;
+    z-index: 1003;
+}
+
+.lightbox button  {
+    opacity: .5;
+    cursor: pointer;
+    background-color: transparent;
+    transition: opacity .3s;
+}
+
+.lightbox button:hover {
+    opacity: 1;
+}
+
+.lightbox__container img {
+    max-width: 90%;
+    height: auto;
+    /* margin-left: 50px; */
+    /* margin-bottom: 50px; */
+}
+
+.lightbox__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+    margin-right: 50px;
+    min-height: 100vh;
+}
+
+.lightbox__loader {
+    width: 38px;
+    height: 38px;
+    opacity: .5;
+    background: url('../svg/loader.svg') center center no-repeat;
+}
+
+@keyframes lightBoxIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+.photo-item {
+    position: relative;
+    overflow: hidden;
+    width: 590px;
+    margin-bottom: 10px;
+
+}
+
+.photo-item img {
+    width: 100%;
+    height: 495px;
+    object-fit: cover;
+    object-position: center;
+    margin: 10px 10px 10px 10px;
+    transition: filter 0.3s ease;
+
+}
+
+.photo-item:hover {
+    filter: brightness(0.5);
+}
+
+.fullscreen-button {
+    position: absolute;
+    top: 9%;
+    left: 93%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background: url('../svg/fullscreen.svg') center center / contain no-repeat;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.photo-item:hover .fullscreen-button, 
+.photo-item:hover  .eye-button,
+.photo-item:hover .title_lightbox-hover,
+.photo-item:hover .categorie_lightbox-hover {
+    opacity: 1;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.fullscreen-button:active,
+.eye-button:active {
+    background-color: transparent;
+}
+
+.flexbox-layout {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.eye-button {
+    position: absolute;
+    background: url('../svg/eye.svg') center center / contain no-repeat;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    top: 50%;
+    left: 50%;
+    border: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease; 
+}
+
+.title_lightbox-hover {
+    position: absolute;
+    top: 88%;
+    left: 7%;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    opacity: 0;
+}
+
+.categorie_lightbox-hover {
+    position: absolute;
+    top: 88%;
+    left: 83%;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    opacity: 0;
+}
+
+.reference_lightbox-info {
+    position: absolute;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    right: 87%;
+    margin-top: 50px;
+}
+
+.categorie_lightbox-info {
+    position: absolute;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    left: 86%;
+    margin-top: 50px;
+}
+
+
