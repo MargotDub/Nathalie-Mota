@@ -157,15 +157,12 @@ if (!empty($photo_categories)) {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // Récupérez la référence de la photo à partir d'une variable PHP
     const photoReference = "<?php echo esc_js($photo_reference); ?>";
-
-    // Sélectionnez le bouton de contact
     const contactButton = document.getElementById('contact-button');
 
     // Ajoutez un écouteur d'événement pour le clic sur le bouton
     contactButton.addEventListener('click', function() {
-        // Remplissez le champ de référence dans le formulaire de contact
+        // Remplir le champ de référence dans le formulaire de contact
         const refPhotoField = document.getElementById('refPhoto').querySelector('input[type="text"]');
         if (refPhotoField) {
             refPhotoField.value = photoReference;

@@ -2,15 +2,17 @@
 document.addEventListener("DOMContentLoaded", function() {
     let myModal = document.querySelector('.modal');
     let myOverlay = document.querySelector('.overlay');
-    let contactLink = document.querySelector('.contact');
+    let contactLink = Array.from(document.querySelectorAll('.contact'));
     let contactLinkButton = document.querySelector('.contact-button');
 
     // Ouvrir et fermer la modale lorsque le lien "Contact" est cliqué
-    contactLink.onclick = function(event) {
-        event.preventDefault();
-        myModal.classList.add('modal--open');
-        myOverlay.style.display = "block";
-    }
+    contactLink.forEach(el => {
+        el.onclick = function(event) {
+            event.preventDefault();
+            myModal.classList.add('modal--open');
+            myOverlay.style.display = "block";
+        }    
+    })
 
     // Ouvrir et fermer la modale lorsque le bouton "Contact" est cliqué
     if (contactLinkButton) {
@@ -33,10 +35,8 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-
 // SINGLE PAGE VIGNETTE AU SURVOL DES FLECHES //
 document.addEventListener("DOMContentLoaded", function() {
-
     const previousLink = document.querySelector(".previous-post-link a");
     const nextLink = document.querySelector(".next-post-link a");
     const previousPhoto = document.querySelector(".previous-photo");
@@ -53,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function() {
         previousPhoto.classList.remove("visible");
     });
 }
-
     if (nextLink) {
         nextLink.addEventListener("mouseover", function() {
             nextPhoto.classList.add("visible");
@@ -89,7 +88,7 @@ class Lightbox {
         const { url, reference, category } = imageData;
         const image = new Image();
         const container = this.element.querySelector('.lightbox__container');
-        container.innerHTML = ''; // Clear previous content
+        container.innerHTML = ''; 
         const loader = document.createElement('div');
         loader.classList.add('lightbox__loader');
         container.appendChild(loader);
@@ -99,7 +98,7 @@ class Lightbox {
         };
         image.src = url;
 
-        // Update reference and category info
+        // Mettre à jour les informations de la lightbox
         this.element.querySelector('.reference_lightbox-info').textContent = reference;
         this.element.querySelector('.categorie_lightbox-info').textContent = category;
     }
@@ -153,24 +152,58 @@ class Lightbox {
 
 Lightbox.init();
 
-function initializeEyeButtons() {
-    const eyeButtons = document.querySelectorAll('.eye-button');
-
-    eyeButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            // Récupérer l'URL du post associé à ce bouton
-            const postUrl = button.getAttribute('data-post-url');
-            // Rediriger l'utilisateur vers l'URL du post
-            window.location.href = postUrl;
-        });
-    });
-}
-
-// Fonction pour charger plus de photos
+// Fonction pour charger les photos via AJAX en fonction des filtres sélectionnés et de la pagination
 jQuery(document).ready(function($) {
+    function loadPhotos(page = 1) {
+        let categories = $('#categories').val();
+        let formats = $('#formats').val();
+        let trierPar = $('#trier-par').val();
+
+        $.ajax({
+            url: my_ajax_vars.ajaxurl,
+            type: 'post',
+            data: {
+                action: 'load_more_photos',
+                categories: categories,
+                formats: formats,
+                trierPar: trierPar,
+                page: page
+            },
+            success: function(response) {
+                if (page === 1) {
+                    $('.flexbox-layout').html(response);
+                } else {
+                    $('.flexbox-layout').append(response);
+                }
+                if (response === 'fin') {
+                    $('.load-more-button').hide();
+                } else {
+                    initializeEyeButtons();
+                }
+            }
+        });
+    }
+
+    $('#categories, #formats, #trier-par').on('change', function() {
+        loadPhotos();
+    });
+
+    // Initialise la class eye-button
+    function initializeEyeButtons() {
+        const eyeButtons = document.querySelectorAll('.eye-button');
+
+        eyeButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                const postUrl = button.getAttribute('data-post-url');
+                window.location.href = postUrl;
+            });
+        });
+    }
+
+    // Gestion de l'événement de clic sur le bouton "Charger plus" pour charger plus de photos via AJAX
     let page = 2;
     let loading = false;
-    
+
     $('.load-more-button').on('click', function() {
         if (!loading) {
             loading = true;
@@ -201,42 +234,6 @@ jQuery(document).ready(function($) {
             });
         }
     });
-
+    
     initializeEyeButtons();
 });
-
-//REQUETE AJAX CHARGER //
-// jQuery(document).ready(function($) {
-//     let page = 2;
-//     let loading = false;
-    
-//     $('.load-more-button').on('click', function() {
-//         if (!loading) {
-//             loading = true;
-//             let categories = $('#categories').val();
-//             let formats = $('#formats').val();
-//             let trierPar = $('#trier-par').val();
-
-//             $.ajax({
-//                 url: my_ajax_vars.ajaxurl,
-//                 type: 'post',
-//                 data: {
-//                     action: 'load_more_photos',
-//                     page: page,
-//                     categories: categories,
-//                     formats: formats,
-//                     trierPar: trierPar
-//                 },
-//                 success: function(response) {
-//                     if (response !== 'fin') {
-//                         $('.flexbox-layout').append(response);
-//                         page++;
-//                     } else {
-//                         $('.load-more-button').hide();
-//                     }
-//                     loading = false;
-//                 }
-//             });
-//         }
-//     });
-// });

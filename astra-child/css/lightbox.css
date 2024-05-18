@@ -22,7 +22,6 @@
     position: fixed;
     right: 0;
     top: 0;
-    /* margin-top: -14px; */
     margin: -14px 14px 0 0;
     z-index: 1002;
     text-indent: -30000px;
@@ -61,8 +60,6 @@
 .lightbox__container img {
     max-width: 90%;
     height: auto;
-    /* margin-left: 50px; */
-    /* margin-bottom: 50px; */
 }
 
 .lightbox__container {
@@ -89,7 +86,7 @@
 .photo-item {
     position: relative;
     overflow: hidden;
-    width: 590px;
+    width: 49%;
     margin-bottom: 10px;
 
 }
@@ -99,7 +96,6 @@
     height: 495px;
     object-fit: cover;
     object-position: center;
-    margin: 10px 10px 10px 10px;
     transition: filter 0.3s ease;
 
 }
@@ -139,7 +135,7 @@
 .flexbox-layout {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-top: 20px;
 }
 
@@ -157,50 +153,108 @@
     transition: opacity 0.3s ease; 
 }
 
-.title_lightbox-hover {
+.title_lightbox-hover,
+.categorie_lightbox-hover,
+.reference_lightbox-info,
+.categorie_lightbox-info {
     position: absolute;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 500;
+    font-size: 14px;
+
+}
+
+.title_lightbox-hover { 
     top: 88%;
     left: 7%;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
     opacity: 0;
 }
 
 .categorie_lightbox-hover {
-    position: absolute;
     top: 88%;
     left: 83%;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
     opacity: 0;
 }
 
 .reference_lightbox-info {
-    position: absolute;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    right: 87%;
+    right: 84%;
     margin-top: 50px;
 }
 
 .categorie_lightbox-info {
-    position: absolute;
-    color: #fff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-    left: 86%;
+    left: 83%;
     margin-top: 50px;
 }
 
+/* LIGHTBOX */
+@media screen and (max-width: 1132px) {
+    .categorie_lightbox-hover {
+        left: 80%;
+    }
+    .fullscreen-button {
+        top: 11%;
+        left: 89%
+    }
+}
 
+@media screen and (max-width: 1000px) {
+    .categorie_lightbox-hover {
+        left: 70%;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .categorie_lightbox-info {
+        left: 75%;
+        margin-top: 0px;
+    }
+    .reference_lightbox-info {
+        right: 79%;
+        margin-top: 0px;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .categorie_lightbox-hover {
+        left: 77%;
+    }
+    .categorie_lightbox-info {
+        left: 60%;
+    }
+    .reference_lightbox-info {
+        right: 65%;
+    }
+}
+
+/* IMAGES */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .photo-item img {
+        height: 450px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .photo-item {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 591px) {
+    .photo-item img {
+        height: 400px;
+    }
+    .photo-item {
+        width: 95%;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .photo-item img {
+        height: 350px;
+    }
+    .categorie_lightbox-hover {
+        left: 74%;
+    }
+}
