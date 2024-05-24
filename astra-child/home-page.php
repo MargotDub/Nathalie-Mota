@@ -57,6 +57,7 @@ get_header(); ?>
     </form>
 </div>
 
+<!-- Génère les photos avec WP_Query -->
 <div class="flexbox-layout">
 <?php 
     $args = array(
@@ -66,6 +67,7 @@ get_header(); ?>
 
     $photos_query = new WP_Query($args);
 
+// Récupère les détails des photos
     if ($photos_query->have_posts()) {
         while ($photos_query->have_posts()) {
             $photos_query->the_post();
@@ -82,6 +84,7 @@ get_header(); ?>
             }
             $category_list = implode(', ', $category_names);
             ?>
+        <!-- Génère les photos + Lightbox -->
             <div class="photo-item">
                 <?php the_post_thumbnail('full'); ?>
                 <?php the_content(); ?>

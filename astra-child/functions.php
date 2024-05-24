@@ -53,7 +53,9 @@ function custom_next_post_link( $format = '%link', $link = '&#x27F6;', $in_same_
     echo get_next_post_link( $format, $link, $in_same_term, $excluded_terms, $taxonomy );
 }
 
-// FONCTION AJAX BOUTON CHARGER PLUS ET FILTRES
+// UTILISE AJAX POUR BOUTON CHARGER PLUS + FILTRES
+
+// Récupération des données
 function load_more_photos() {
     $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
     $categories = isset($_POST['categories']) ? sanitize_text_field($_POST['categories']) : '';
@@ -66,6 +68,7 @@ function load_more_photos() {
         'paged' => $page,
     );
 
+// Conditions de filtrages à remplir pour afficher les photos
     $tax_query = array('relation' => 'AND');
 
     if ($categories) {
@@ -98,6 +101,7 @@ function load_more_photos() {
 
     $photos_query = new WP_Query($args);
 
+// Boucle qui affiche les photos au clic sur le bouton + Lightbox
     if ($photos_query->have_posts()) {
         while ($photos_query->have_posts()) {
             $photos_query->the_post();

@@ -45,15 +45,20 @@ input[type="submit"] {
     color: #000000;
 }
 
-.contact-button:hover,
-.contact-button:focus,
-.contact-button:active
-.load-more-button:hover,
-.load-more-button:focus,
-.load-more-button:active,
 input[type="submit"]:hover,
 input[type="submit"]:active,
-input[type="submit"]:focus   {
+input[type="submit"]:focus {
+    background-color: #000000;
+    color: #ffffff;
+    transition: 500ms;
+}
+
+.contact-button:hover,
+.contact-button:focus,
+.contact-button:active,
+.load-more-button:focus,
+.load-more-button:active,
+.load-more-button:hover {
     background-color: #000000;
     color: #ffffff;
     transition: 500ms;
@@ -168,10 +173,6 @@ textarea.wpcf7-form-control {
 .wpcf7 .wpcf7-not-valid-tip {
     margin-top: 0;
     font-size: 11px;
-}
-
-.modal--open {
-    display: block;
 }
 
 .modal__header__images {
@@ -481,6 +482,12 @@ select option {
     #single-photo-details h2 {
         width: 100%;
     }
+    .single-contenu {
+        width: 100%;
+    }
+    input[type="submit"] {
+        width: 100%;
+    }
 }
 
 @media screen and (max-width: 591px) {
@@ -489,7 +496,7 @@ select option {
         margin-bottom: 30px;
     }
     .single-button p {
-        margin-bottom: 10px;
+        margin: 0 0 10px 0;
     }
     #single-photo-details img,
     .single-contenu,

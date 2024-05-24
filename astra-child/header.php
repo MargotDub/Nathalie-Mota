@@ -70,7 +70,7 @@ if ( apply_filters( 'astra_header_profile_gmpg_link', true ) ) {
 <div class="modal">
 	<img class="modal__header__images" src="<?php echo get_stylesheet_directory_uri(); ?>/images/contact_header.png"/>
 	<?php echo do_shortcode('[contact-form-7 id="df7d894" title="Modale de contact"]'); ?>
-</div> 
+</div>
 
 	<div id="content" class="site-content">
 		<div>
